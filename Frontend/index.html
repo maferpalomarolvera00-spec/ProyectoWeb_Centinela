@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- BARRA DE TAREAS -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button id="toggle-sidebar" class="icon-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="user-profile-sidebar">
+                    <div class="generic-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Proyecto Centinela</span>
+                    </div>
+                </div> 
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="nav-text">Resumen</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span class="nav-text">Mapa</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="nav-text">Historial</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="nav-text">Recordatorios</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-text">Cuenta</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                 <!-- Botón Modo Claro y Oscuro -->
+                    <button id="theme-toggle" class="icon-btn theme-btn">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+
+        </aside>
+
+        <!-- DASHBOARD -->
+        <main class="main-content">
+            <!-- BARRA SUPERIOR -->
+            <header class="top-bar">
+                
+            <div class="section-title">
+                <h1>Resumen del domicilio</h1>
+                <p>Datos - <span id="theme-label">Tema Claro</span></p>
+            </div>
+
+                <div class="top-actions">
+                    <div class="data-range">
+                        <span>Rango de datos:</span>
+                        <select>
+                            <option>Este mes</option>
+                            <option>Última semana</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MÉTRICAS -->
+            <div class="metrics-grid">
+                <div class="card metric-card">
+                    <h3>Gas LP</h3>
+                    <div class="value">1860 <span class="unit">ADC</span></div>
+                    <div class="status warning-text">Sin calibración</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Metano</h3>
+                    <div class="value">—</div>
+                    <div class="status unknown-text">No instalado</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Temperatura</h3>
+                    <div class="value">24.6 <span class="unit">°C</span></div>
+                    <div class="status valid-text">Dato válido</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Humedad</h3>
+                    <div class="value">48.1 <span class="unit">%</span></div>
+                    <div class="status valid-text">Dato válido</div>
+                </div>
+            </div>
+
+            <!-- PANEL INFERIOR -->
+            <div class="bottom-grid">
+                <!-- Mapa 2D -->
+                <div class="card map-card">
+                    <h3>Mapa asistido 2D <span class="badge">versión 1</span></h3>
+                    <div class="map-placeholder">
+                        <div class="map-drawing">
+                            <p>Plano de habitaciones y trayectoria</p>
+                        </div>
+                    </div>
+                    <p class="map-footer">Posición estimada</p>
+                </div>
+
+                <!-- Panel Operativo y Eventos -->
+                <div class="operation-panel">
+                    <div class="card operation-card">
+                        <h3>Operación</h3>
+                        <div class="op-item">
+                            <span class="op-label">Batería</span>
+                            <span class="op-value">11.4 V</span>
+                            <span class="op-sub">SOC no disponible</span>
+                        </div>
+                        <div class="op-item">
+                            <span class="op-label">Estaciones</span>
+                            <span class="op-value">2 de 5</span>
+                            <span class="op-sub">Último dato: hace 2 s</span>
+                        </div>
+                    </div>
+
+                    <div class="card events-card">
+                        <h3>Eventos y Avisos</h3>
+                        <div class="event-item warning">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>Calibración pendiente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
