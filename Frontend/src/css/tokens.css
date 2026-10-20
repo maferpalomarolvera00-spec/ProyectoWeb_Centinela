@@ -1,0 +1,54 @@
+:root {
+    /* Tema Claro por defecto */
+    --background: #EEEEEE;
+    --surface: #FFFFFF;
+    --surfaceMuted: #CCCCCC;
+    --textPrimary: #222831;
+    --textSecondary: #2D4059;
+    --primary: #2D4059;
+    --onPrimary: #FFFFFF;
+    --secondary: #FF5722;
+    --border: #CCCCCC;
+    --focus: #FF5722;
+    --operational: #B5D0A2; 
+    --warning: #FF5722;
+    --critical: #A23443;
+    
+    --radius-card: 12px;
+    --radius-input: 8px;
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 80px;
+    --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+    --background: #222831;
+    --surface: #2D4059;
+    --surfaceMuted: #1D2A3A;
+    --textPrimary: #EEEEEE;
+    --textSecondary: #A0B0C0;
+    --primary: #FF5722;
+    --onPrimary: #222831;
+    --secondary: #8A9BA8;
+    --border: #3E5675;
+    --focus: #FF5722;
+    --operational: #99CBAA; 
+    --warning: #FF5722;
+    --critical: #F0A4B0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background);
+    color: var(--textPrimary);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    font-variant-numeric: tabular-nums; 
+    height: 100vh;
+    overflow: hidden;
+}
