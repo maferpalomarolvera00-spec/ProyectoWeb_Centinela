@@ -1,88 +1,3 @@
-:root {
-    /* Tema Claro por defecto */
-    --background: #EEEEEE;
-    --surface: #FFFFFF;
-    --surfaceMuted: #CCCCCC;
-    --textPrimary: #222831;
-    --textSecondary: #2D4059;
-    --primary: #2D4059;
-    --onPrimary: #FFFFFF;
-    --secondary: #FF5722;
-    --border: #CCCCCC;
-    --focus: #FF5722;
-    --operational: #B5D0A2; 
-    --warning: #FF5722;
-    --critical: #A23443;
-    
-    --radius-card: 12px;
-    --radius-input: 8px;
-    --sidebar-width: 250px;
-    --sidebar-collapsed-width: 80px;
-    --transition-speed: 0.3s;
-}
-
-[data-theme="dark"] {
-    --background: #222831;
-    --surface: #2D4059;
-    --surfaceMuted: #1D2A3A;
-    --textPrimary: #EEEEEE;
-    --textSecondary: #A0B0C0;
-    --primary: #FF5722;
-    --onPrimary: #222831;
-    --secondary: #8A9BA8;
-    --border: #3E5675;
-    --focus: #FF5722;
-    --operational: #99CBAA; 
-    --warning: #FF5722;
-    --critical: #F0A4B0;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--background);
-    color: var(--textPrimary);
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-    font-variant-numeric: tabular-nums; 
-    height: 100vh;
-    overflow: hidden;
-}
-
-.app-container {
-    display: flex;
-    height: 100vh;
-}
-
-/* BARRA LATERAL */
-.sidebar {
-    width: var(--sidebar-width);
-    background-color: var(--surface);
-    border-right: 1px solid var(--border);
-    transition: width var(--transition-speed) ease;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    z-index: 10;
-}
-
-.sidebar.collapsed {
-    width: var(--sidebar-collapsed-width);
-}
-
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    gap: 12px;
-    height: 80px;
-    border-bottom: 1px solid var(--border);
-}
-
 .generic-avatar {
     width: 65px;
     height: 48px;
@@ -112,13 +27,13 @@ body {
     font-weight: 600;
 }
 
-.user-profile-sidebar{
+.user-profile-sidebar {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.sidebar.collapsed .user-profile-sidebar{
+.sidebar.collapsed .user-profile-sidebar {
     display: none;
 }
 
@@ -133,22 +48,6 @@ body {
 .sidebar.collapsed .logo-text {
     opacity: 0;
     pointer-events: none;
-}
-
-.sidebar-nav {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 24px 0 24px 12px;
-}
-
-.sidebar-footer{
-    padding: 24px;
-    display: flex;
-    justify-content: right;
-    align-items: start;
-    margin-right: 8px;
 }
 
 .nav-item {
@@ -182,7 +81,7 @@ body {
     display: none;
 }
 
-.sidebar.collapsed .nav-item{
+.sidebar.collapsed .nav-item {
     padding: 16px 0;
     justify-content: center;
 }
@@ -200,7 +99,7 @@ body {
 .nav-item.active::before,
 .nav-item.active::after,
 .nav-item:hover::before,
-.nav-item:hover::after{
+.nav-item:hover::after {
     content: "";
     position: absolute;
     right: -28px;
@@ -212,37 +111,24 @@ body {
 }
 
 .nav-item.active::before,
-.nav-item:hover::before{
-    top:-30px; /*Se encima en el boton*/
+.nav-item:hover::before {
+    top: -30px;
     border-top-right-radius: 30px;
     box-shadow: 15px 15px 0 15px var(--background);
 }
 
 .nav-item.active::after,
-.nav-item:hover::after{
+.nav-item:hover::after {
     bottom: -30px;
     border-top-right-radius: 30px;
     box-shadow: 15px -15px 0 15px var(--background);
 }
 
-.nav-item.active,
-.nav-item:hover{
+.nav-item:hover {
     background-color: var(--background);
     color: var(--primary);
     font-weight: 600;
     z-index: 2;
-}
-
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 3vh 32px;
-    height: 100vh;
-    overflow: hidden;
-
-    position: relative;
-    z-index: 10;
 }
 
 .top-bar {
@@ -251,7 +137,6 @@ body {
     align-items: center;
     margin-bottom: 1.5vh;
 }
-
 
 .top-actions {
     display: flex;
@@ -306,13 +191,6 @@ body {
     justify-content: center;
 }
 
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 2vh;
-}
-
 .metric-card h3 {
     font-size: 14px;
     color: var(--textSecondary);
@@ -340,15 +218,7 @@ body {
 .unknown-text { color: var(--textSecondary); }
 .valid-text { color: var(--operational); }
 
-.bottom-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 16px;
-    flex: 1;
-    min-height: 0;
-}
-
-.map-card{
+.map-card {
     display: flex;
     flex-direction: column;
     padding: 16px;
