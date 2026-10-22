@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial - Proyecto Centinela</title>
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button id="toggle-sidebar" class="icon-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="user-profile-sidebar">
+                    <div class="generic-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Proyecto Centinela</span>
+                    </div>
+                </div> 
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="nav-text">Resumen</span>
+                </a>
+                <a href="mapa.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span class="nav-text">Mapa</span>
+                </a>
+                <a href="historial.html" class="nav-item active">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="nav-text">Historial</span>
+                </a>
+                <a href="recordatorios.html" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="nav-text">Recordatorios</span>
+                </a>
+                <a href="cuenta.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-text">Cuenta</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- Botón Modo Claro y Oscuro -->
+                <button id="theme-toggle" class="icon-btn theme-btn">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- DASHBOARD / CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- BARRA SUPERIOR (Limpia sin textos redundantes) -->
+            <header class="top-bar">
+                <div class="section-title">
+                    <h1>Historial de Registros</h1>
+                    <p>Bitácora de variables ambientales</p>
+                </div>
+
+                <div class="top-actions">
+                    <div class="data-range">
+                        <span>Filtrar por:</span>
+                        <select id="filter-range">
+                            <option>Últimas 24 horas</option>
+                            <option>Última semana</option>
+                            <option>Este mes</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MÉTRICAS O RESUMEN RÁPIDO (Con guiones y listos para BD) -->
+            <div class="metrics-grid">
+                <div class="card metric-card">
+                    <h3>Registros Totales</h3>
+                    <div class="value" id="total-records">—</div>
+                    <div class="status valid-text">Base sincronizada</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Picos de Gas LP</h3>
+                    <div class="value" id="gas-peaks">—</div>
+                    <div class="status warning-text">Revisar alertas</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Temp. Promedio</h3>
+                    <div class="value"><span id="avg-temp">—</span> <span class="unit">°C</span></div>
+                    <div class="status valid-text">Estable</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Humedad Prom.</h3>
+                    <div class="value"><span id="avg-humidity">—</span> <span class="unit">%</span></div>
+                    <div class="status valid-text">Normal</div>
+                </div>
+            </div>
+
+            <!-- PANEL INFERIOR CON TABLA DE HISTORIAL -->
+            <div class="bottom-grid">
+                <!-- Tabla de datos históricos -->
+                <div class="card map-card" style="grid-column: span 2;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3>Bitácora de Eventos y Sensores</h3>
+                        <button id="btn-export-csv" class="icon-btn" style="font-size: 14px; background: var(--surfaceMuted); padding: 6px 12px; border-radius: 8px; cursor: pointer; border: none; color: var(--textPrimary); display: flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-download"></i> Exportar CSV
+                        </button>
+                    </div>
+                    
+                    <div class="map-placeholder" style="justify-content: flex-start; align-items: stretch; padding: 16px; overflow-y: auto; text-align: left;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border); color: var(--textSecondary);">
+                                    <th style="padding: 8px; text-align: left;">Timestamp</th>
+                                    <th style="padding: 8px; text-align: left;">Sensor / Módulo</th>
+                                    <th style="padding: 8px; text-align: left;">Valor Registrado</th>
+                                    <th style="padding: 8px; text-align: left;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <!-- Filas vacías o con guiones para que el backend las inyecte dinámicamente -->
+                                <tr>
+                                    <td colspan="4" style="padding: 20px; text-align: center; color: var(--textSecondary);">
+                                        Cargando registros desde la base de datos...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="map-footer">Mostrando registros en tiempo real sincronizados con el servidor.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/historial.js"></script>
+</body>
+</html>

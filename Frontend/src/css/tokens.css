@@ -1,5 +1,5 @@
 :root {
-    /* Tema Claro por defecto */
+    /* Tema Claro */
     --background: #EEEEEE;
     --surface: #FFFFFF;
     --surfaceMuted: #CCCCCC;
@@ -10,9 +10,11 @@
     --secondary: #FF5722;
     --border: #CCCCCC;
     --focus: #FF5722;
-    --operational: #B5D0A2; 
-    --warning: #FF5722;
-    --critical: #A23443;
+    
+    /* COLORES DE ESTADO MEJORADOS (Mayor contraste para Tema Claro) */
+    --operational: #2E7D32;  /* Verde bosque vibrante y legible */
+    --warning: #E65100;      /* Naranja suave/cálido (no chillante) */
+    --critical: #C62828;     /* Rojo intenso */
     
     --radius-card: 12px;
     --radius-input: 8px;
@@ -32,9 +34,11 @@
     --secondary: #8A9BA8;
     --border: #3E5675;
     --focus: #FF5722;
-    --operational: #99CBAA; 
-    --warning: #FF5722;
-    --critical: #F0A4B0;
+    
+    /* COLORES DE ESTADO MEJORADOS (Para Tema Oscuro) */
+    --operational: #81C784;  /* Verde claro visible en fondo oscuro */
+    --warning: #FF8A65;      /* Naranja pastel visible */
+    --critical: #E57373;     /* Rojo suave */
 }
 
 * {
