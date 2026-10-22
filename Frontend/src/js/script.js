@@ -1,47 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // SIDEBAR
+    // ==========================================
+    // 1. CONTROL DE LA BARRA LATERAL (SIDEBAR)
+    // ==========================================
     const toggleSidebarBtn = document.getElementById('toggle-sidebar');
     const sidebar = document.getElementById('sidebar');
 
-    toggleSidebarBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-    });
+    if (toggleSidebarBtn && sidebar) {
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            // Guardar estado colapsado en localStorage opcionalmente
+            const isCollapsed = sidebar.classList.contains('collapsed');
+            localStorage.setItem('centinela-sidebar', isCollapsed);
+        });
 
-    // MODO CLARO/OSCURO
+        // Restaurar estado guardado del sidebar al cargar
+        if (localStorage.getItem('centinela-sidebar') === 'true') {
+            sidebar.classList.add('collapsed');
+        }
+    }
+
+    // ==========================================
+    // 2. MODO CLARO / OSCURO GLOBAL
+    // ==========================================
     const themeToggleBtn = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
     const themeLabel = document.getElementById('theme-label');
-    const themeIcon = themeToggleBtn.querySelector('i');
 
-    const savedTheme = localStorage.getItem('centinela-theme') || 'light';
-    applyTheme(savedTheme);
-
-    // Boton de cambio
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        applyTheme(newTheme);
-    });
-
-    /**
-     * 
-     * @param {string} theme 
-     */
-    function applyTheme(theme) {
-        htmlElement.setAttribute('data-theme', theme);
+    if (themeToggleBtn) {
+        const themeIcon = themeToggleBtn.querySelector('i');
         
-        localStorage.setItem('centinela-theme', theme);
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('centinela-theme') || 'light';
+        applyTheme(savedTheme);
 
-        // ICONO SOL O LUNA
-        if (theme === 'dark') {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-            themeLabel.textContent = 'Tema Oscuro';
-        } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-            themeLabel.textContent = 'Tema Claro';
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
+
+        function applyTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('centinela-theme', theme);
+
+            if (themeIcon) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+
+            if (themeLabel) {
+                themeLabel.textContent = theme === 'dark' ? 'Tema Oscuro' : 'Tema Claro';
+            }
         }
     }
 });

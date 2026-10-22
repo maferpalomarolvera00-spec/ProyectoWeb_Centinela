@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta - Proyecto Centinela</title>
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button id="toggle-sidebar" class="icon-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="user-profile-sidebar">
+                    <div class="generic-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Proyecto Centinela</span>
+                    </div>
+                </div> 
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="nav-text">Resumen</span>
+                </a>
+                <a href="mapa.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span class="nav-text">Mapa</span>
+                </a>
+                <a href="historial.html" class="nav-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="nav-text">Historial</span>
+                </a>
+                <a href="recordatorios.html" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="nav-text">Recordatorios</span>
+                </a>
+                <a href="cuenta.html" class="nav-item active">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-text">Cuenta</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- Botón Modo Claro y Oscuro -->
+                <button id="theme-toggle" class="icon-btn theme-btn">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- DASHBOARD / CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- BARRA SUPERIOR (Corregida de etiquetas redundantes) -->
+            <header class="top-bar">
+                <div class="section-title">
+                    <h1>Configuración de Cuenta</h1>
+                    <p>Perfil de usuario y credenciales</p>
+                </div>
+
+                <div class="top-actions">
+                    <div class="data-range">
+                        <span>Sesión activa:</span>
+                        <span style="font-weight: 600; color: var(--operational);">Segura</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- TARJETAS SUPERIORES CON GUIONES -->
+            <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card metric-card">
+                    <h3>Usuario Principal</h3>
+                    <div class="value" id="user-card-name" style="font-size: 20px;">—</div>
+                    <div class="status valid-text" id="user-card-status">Sincronizando...</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Tipo de Usuario</h3>
+                    <div class="value" id="user-card-role" style="font-size: 20px;">—</div>
+                    <div class="status valid-text">Permisos de monitoreo</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Estado del Sistema</h3>
+                    <div class="value" style="font-size: 20px;">Online</div>
+                    <div class="status valid-text">Estación conectada</div>
+                </div>
+            </div>
+
+            <!-- PANEL INFERIOR CON FORMULARIO DE PERFIL -->
+            <div class="bottom-grid">
+                <div class="card map-card" style="grid-column: span 2;">
+                    <h3>Información del Perfil</h3>
+                    <div class="map-placeholder" style="justify-content: flex-start; align-items: stretch; padding: 24px; overflow-y: auto; text-align: left; display: flex; flex-direction: column; gap: 16px;">
+                        
+                        <!-- Encabezado del perfil -->
+                        <div style="display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px;">
+                            <div style="width: 65px; height: 65px; border-radius: 50%; background-color: var(--surfaceMuted); display: flex; justify-content: center; align-items: center; font-size: 26px; color: var(--textSecondary);">
+                                <i class="fa-solid fa-user-check"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 18px; color: var(--textPrimary);" id="profile-display-name">—</h4>
+                                <p style="font-size: 13px; color: var(--textSecondary);" id="profile-display-email">—</p>
+                            </div>
+                        </div>
+
+                        <!-- Formulario con inputs vacíos listos para la BD -->
+                        <form id="account-form" onsubmit="event.preventDefault();">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; color: var(--textSecondary); margin-bottom: 6px;">Nombre Completo</label>
+                                    <input type="text" id="input-name" placeholder="Cargando nombre..." value="" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--surface); color: var(--textPrimary); font-family: inherit;">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; color: var(--textSecondary); margin-bottom: 6px;">Correo Electrónico</label>
+                                    <input type="email" id="input-email" placeholder="Cargando correo..." value="" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--surface); color: var(--textPrimary); font-family: inherit;">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; color: var(--textSecondary); margin-bottom: 6px;">Teléfono de Contacto</label>
+                                    <input type="tel" id="input-phone" placeholder="Sin registrar" value="" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--surface); color: var(--textPrimary); font-family: inherit;">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; color: var(--textSecondary); margin-bottom: 6px;">Ubicación / Domicilio</label>
+                                    <input type="text" id="input-location" placeholder="Sin especificar" value="" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--surface); color: var(--textPrimary); font-family: inherit;">
+                                </div>
+                            </div>
+
+                            <!-- Botón Naranja de Guardar Cambios -->
+                            <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+                                <button type="submit" id="btn-save-profile" style="background-color: var(--primary); color: #ffffff; border: none; font-size: 14px; font-weight: 600; padding: 10px 24px; border-radius: 8px; cursor: pointer; transition: opacity 0.2s; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <p class="map-footer">Los cambios se sincronizarán localmente con el servidor de la estación.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/cuenta.js"></script>
+</body>
+</html>

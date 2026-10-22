@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Proyecto Centinela</title>
     <link rel="stylesheet" href="../css/tokens.css">
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
@@ -59,24 +59,22 @@
                     <button id="theme-toggle" class="icon-btn theme-btn">
                         <i class="fa-solid fa-moon"></i>
                     </button>
-                </div>
-
+            </div>
         </aside>
 
         <!-- DASHBOARD -->
         <main class="main-content">
             <!-- BARRA SUPERIOR -->
             <header class="top-bar">
-                
-            <div class="section-title">
-                <h1>Resumen del domicilio</h1>
-                <p>Datos - <span id="theme-label">Tema Claro</span></p>
-            </div>
+                <div class="section-title">
+                    <h1>Resumen del domicilio</h1>
+                    <p>Monitoreo de sensores en tiempo real</p>
+                </div>
 
                 <div class="top-actions">
                     <div class="data-range">
                         <span>Rango de datos:</span>
-                        <select>
+                        <select id="range-select">
                             <option>Este mes</option>
                             <option>Última semana</option>
                         </select>
@@ -88,23 +86,23 @@
             <div class="metrics-grid">
                 <div class="card metric-card">
                     <h3>Gas LP</h3>
-                    <div class="value">1860 <span class="unit">ADC</span></div>
-                    <div class="status warning-text">Sin calibración</div>
+                    <div class="value"><span id="gas-value">—</span> <span class="unit">ADC</span></div>
+                    <div class="status warning-text" id="gas-status">Sincronizando...</div>
                 </div>
                 <div class="card metric-card">
                     <h3>Metano</h3>
-                    <div class="value">—</div>
-                    <div class="status unknown-text">No instalado</div>
+                    <div class="value" id="methane-value">—</div>
+                    <div class="status unknown-text" id="methane-status">No instalado</div>
                 </div>
                 <div class="card metric-card">
                     <h3>Temperatura</h3>
-                    <div class="value">24.6 <span class="unit">°C</span></div>
-                    <div class="status valid-text">Dato válido</div>
+                    <div class="value"><span id="temp-value">—</span> <span class="unit">°C</span></div>
+                    <div class="status valid-text" id="temp-status">Sincronizando...</div>
                 </div>
                 <div class="card metric-card">
                     <h3>Humedad</h3>
-                    <div class="value">48.1 <span class="unit">%</span></div>
-                    <div class="status valid-text">Dato válido</div>
+                    <div class="value"><span id="humidity-value">—</span> <span class="unit">%</span></div>
+                    <div class="status valid-text" id="humidity-status">Sincronizando...</div>
                 </div>
             </div>
 
@@ -127,21 +125,21 @@
                         <h3>Operación</h3>
                         <div class="op-item">
                             <span class="op-label">Batería</span>
-                            <span class="op-value">11.4 V</span>
-                            <span class="op-sub">SOC no disponible</span>
+                            <span class="op-value" id="battery-value">—</span>
+                            <span class="op-sub" id="battery-sub">Esperando datos</span>
                         </div>
                         <div class="op-item">
                             <span class="op-label">Estaciones</span>
-                            <span class="op-value">2 de 5</span>
-                            <span class="op-sub">Último dato: hace 2 s</span>
+                            <span class="op-value" id="stations-value">—</span>
+                            <span class="op-sub" id="stations-sub">Sin conexión</span>
                         </div>
                     </div>
 
                     <div class="card events-card">
                         <h3>Eventos y Avisos</h3>
-                        <div class="event-item warning">
+                        <div class="event-item warning" id="events-container">
                             <i class="fa-solid fa-circle-exclamation"></i>
-                            <span>Calibración pendiente</span>
+                            <span>Sin eventos críticos</span>
                         </div>
                     </div>
                 </div>
@@ -150,5 +148,6 @@
     </div>
 
     <script src="../js/script.js"></script>
+    <script src="../js/index.js"></script>
 </body>
 </html>

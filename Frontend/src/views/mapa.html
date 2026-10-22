@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa 2D - Proyecto Centinela</title>
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button id="toggle-sidebar" class="icon-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="user-profile-sidebar">
+                    <div class="generic-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Proyecto Centinela</span>
+                    </div>
+                </div> 
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="nav-text">Resumen</span>
+                </a>
+                <a href="mapa.html" class="nav-item active">
+                    <i class="fa-solid fa-route"></i>
+                    <span class="nav-text">Mapa</span>
+                </a>
+                <a href="historial.html" class="nav-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="nav-text">Historial</span>
+                </a>
+                <a href="recordatorios.html" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="nav-text">Recordatorios</span>
+                </a>
+                <a href="cuenta.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-text">Cuenta</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- Botón Modo Claro y Oscuro -->
+                <button id="theme-toggle" class="icon-btn theme-btn">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- DASHBOARD / CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- BARRA SUPERIOR (Sin selectores redundantes) -->
+            <header class="top-bar">
+                <div class="section-title">
+                    <h1>Mapa Asistido 2D</h1>
+                    <p>Localización y trayectoria en tiempo real</p>
+                </div>
+            </header>
+
+            <!-- MÉTRICAS DE POSICIONAMIENTO CON IDs -->
+            <div class="metrics-grid">
+                <div class="card metric-card">
+                    <h3>Coordenada X / Y</h3>
+                    <div class="value"><span id="coord-xy-value">—</span> <span class="unit">m</span></div>
+                    <div class="status valid-text" id="coord-xy-status">Esperando señal</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Incertidumbre (SLAM)</h3>
+                    <div class="value"><span id="slam-value">—</span> <span class="unit">cm</span></div>
+                    <div class="status valid-text" id="slam-status">Calculando...</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Estación Actual</h3>
+                    <div class="value" id="station-value">—</div>
+                    <div class="status operational-text" id="station-sub">Sin posición</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Estado del Robot</h3>
+                    <div class="value" id="robot-status-text" style="font-size: 22px;">—</div>
+                    <div class="status valid-text" id="robot-status-sub">Desconectado</div>
+                </div>
+            </div>
+
+            <!-- PANEL INFERIOR CON EL PLANO Y CONTROLES -->
+            <div class="bottom-grid">
+                <!-- Visualizador del Mapa 2D Amplio -->
+                <div class="card map-card" id="map-card-container" style="grid-column: span 2;">
+                    <h3>Plano de Habitaciones y Trayectoria Activa</h3>
+                    <div class="map-placeholder" style="background-color: var(--surfaceMuted); display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
+                        <!-- Elemento visual simulado del plano -->
+                        <div style="border: 2px dashed var(--border); padding: 40px; border-radius: 12px; text-align: center; color: var(--textSecondary);">
+                            <i class="fa-solid fa-map-location-dot" style="font-size: 48px; margin-bottom: 12px; color: var(--primary);"></i>
+                            <p style="font-weight: 600; font-size: 16px;">Renderizado de Plano 2D </p>
+                            <p style="font-size: 13px; margin-top: 4px;">Sala • Cocina • Pasillo • Estación de Carga</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                        <p class="map-footer">Última actualización de posición: —</p>
+                        <div style="display: flex; gap: 8px;">
+                            <button id="btn-recenter" class="icon-btn" style="font-size: 13px; background: var(--surfaceMuted); padding: 6px 12px; border-radius: 8px; cursor: pointer; border: none; color: var(--textPrimary); display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-rotate-right"></i> Recentrar
+                            </button>
+                            <button id="btn-fullscreen" class="icon-btn" style="font-size: 13px; background: var(--surfaceMuted); padding: 6px 12px; border-radius: 8px; cursor: pointer; border: none; color: var(--textPrimary); display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-expand"></i> Pantalla Completa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/mapa.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recordatorios y Alertas - Proyecto Centinela</title>
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button id="toggle-sidebar" class="icon-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="user-profile-sidebar">
+                    <div class="generic-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Proyecto Centinela</span>
+                    </div>
+                </div> 
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="nav-text">Resumen</span>
+                </a>
+                <a href="mapa.html" class="nav-item">
+                    <i class="fa-solid fa-route"></i>
+                    <span class="nav-text">Mapa</span>
+                </a>
+                <a href="historial.html" class="nav-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="nav-text">Historial</span>
+                </a>
+                <a href="recordatorios.html" class="nav-item active">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="nav-text">Recordatorios</span>
+                </a>
+                <a href="cuenta.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-text">Cuenta</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- Botón Modo Claro y Oscuro -->
+                <button id="theme-toggle" class="icon-btn theme-btn">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- DASHBOARD / CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- BARRA SUPERIOR (Corregida de etiquetas redundantes) -->
+            <header class="top-bar">
+                <div class="section-title">
+                    <h1>Recordatorios y Alertas</h1>
+                    <p>Gestión de avisos del sistema y mantenimiento</p>
+                </div>
+
+                <div class="top-actions">
+                    <div class="data-range">
+                        <span>Filtrar:</span>
+                        <select id="filter-alerts">
+                            <option>Todas las alertas</option>
+                            <option>Pendientes</option>
+                            <option>Críticas</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MÉTRICAS DE ALERTAS (Con guiones iniciales) -->
+            <div class="metrics-grid">
+                <div class="card metric-card">
+                    <h3>Alertas Activas</h3>
+                    <div class="value" id="metric-active-alerts">—</div>
+                    <div class="status warning-text">Sincronizando...</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Mantenimiento</h3>
+                    <div class="value" id="metric-maintenance">—</div>
+                    <div class="status valid-text">Programado</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Calibración Gas LP</h3>
+                    <div class="value" id="metric-calibration">—</div>
+                    <div class="status warning-text">Verificando estado</div>
+                </div>
+                <div class="card metric-card">
+                    <h3>Estado del Sistema</h3>
+                    <div class="value" id="metric-system-status">—</div>
+                    <div class="status valid-text">Sincronizado</div>
+                </div>
+            </div>
+
+            <!-- PANEL INFERIOR CON LISTADO DE RECORDATORIOS -->
+            <div class="bottom-grid">
+                <!-- Lista de Alertas y Avisos -->
+                <div class="card map-card" style="grid-column: span 2;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3>Panel de Eventos y Tareas Pendientes</h3>
+                        <button id="btn-new-reminder" class="icon-btn" style="font-size: 14px; background: var(--surfaceMuted); padding: 6px 12px; border-radius: 8px; cursor: pointer; border: none; color: var(--textPrimary); display: flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-plus"></i> Nuevo Recordatorio
+                        </button>
+                    </div>
+                    
+                    <!-- Contenedor dinámico de alertas -->
+                    <div id="reminders-container" class="map-placeholder" style="justify-content: flex-start; align-items: stretch; padding: 16px; overflow-y: auto; text-align: left; gap: 12px; display: flex; flex-direction: column;">
+                        
+                        <div style="padding: 20px; text-align: center; color: var(--textSecondary);">
+                            Cargando alertas y recordatorios desde la base de datos...
+                        </div>
+
+                    </div>
+                    <p class="map-footer">Centro de notificaciones y alertas sincronizado.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/recordatorios.js"></script>
+</body>
+</html>
