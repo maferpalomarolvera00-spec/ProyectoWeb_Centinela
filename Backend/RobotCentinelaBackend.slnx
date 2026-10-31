@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="RobotCentinela.Api/RobotCentinela.Api.csproj" />
+  <Project Path="RobotCentinela.Application/RobotCentinela.Application.csproj" />
+  <Project Path="RobotCentinela.Core/RobotCentinela.Core.csproj" />
+  <Project Path="RobotCentinela.Infrastructure/RobotCentinela.Infrastructure.csproj" />
+</Solution>
