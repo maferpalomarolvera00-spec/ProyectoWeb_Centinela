@@ -8,8 +8,34 @@
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Librería para las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- ESTILOS PARA FORZAR EL SCROLL Y EVITAR SUPERPOSICIONES -->
+    <style>
+        /* Asegura que el contenedor principal ocupe toda la ventana pero no haga scroll global */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Obliga a la sección principal a hacer scroll independiente y expandirse */
+        .main-content {
+            flex-grow: 1;
+            height: 100vh;
+            overflow-y: auto !important;
+            padding-bottom: 60px !important;
+            display: block !important;
+        }
+        /* Cambia el grid inferior a un bloque flexible para que no aplaste la gráfica y la tabla */
+        .bottom-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 24px;
+            margin-top: 24px;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -48,14 +74,9 @@
                     <i class="fa-solid fa-bell"></i>
                     <span class="nav-text">Recordatorios</span>
                 </a>
-                <a href="cuenta.html" class="nav-item">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="nav-text">Cuenta</span>
-                </a>
             </nav>
 
             <div class="sidebar-footer">
-                <!-- Botón Modo Claro y Oscuro -->
                 <button id="theme-toggle" class="icon-btn theme-btn">
                     <i class="fa-solid fa-moon"></i>
                 </button>
@@ -64,11 +85,10 @@
 
         <!-- DASHBOARD / CONTENIDO PRINCIPAL -->
         <main class="main-content">
-            <!-- BARRA SUPERIOR (Limpia sin textos redundantes) -->
             <header class="top-bar">
                 <div class="section-title">
                     <h1>Historial de Registros</h1>
-                    <p>Bitácora de variables ambientales</p>
+                    <p>Bitácora de variables ambientales y gráficas de tendencia</p>
                 </div>
 
                 <div class="top-actions">
@@ -83,62 +103,64 @@
                 </div>
             </header>
 
-            <!-- MÉTRICAS O RESUMEN RÁPIDO (Con guiones y listos para BD) -->
+            <!-- TARJETAS INTERACTIVAS -->
             <div class="metrics-grid">
-                <div class="card metric-card">
-                    <h3>Registros Totales</h3>
-                    <div class="value" id="total-records">—</div>
-                    <div class="status valid-text">Base sincronizada</div>
+                <div class="card metric-card interactive-card" id="card-mq6" style="cursor: pointer; transition: 0.3s; border: 2px solid transparent;">
+                    <h3 style="margin-bottom: 8px;">MQ6 Promedio</h3>
+                    <div class="value" style="margin: 0;"><span id="avg-mq6">—</span> <span class="unit">ADC</span></div>
                 </div>
-                <div class="card metric-card">
-                    <h3>Picos de Gas LP</h3>
-                    <div class="value" id="gas-peaks">—</div>
-                    <div class="status warning-text">Revisar alertas</div>
+                <div class="card metric-card interactive-card" id="card-mq4" style="cursor: pointer; transition: 0.3s; border: 2px solid transparent;">
+                    <h3 style="margin-bottom: 8px;">MQ4 Promedio</h3>
+                    <div class="value" style="margin: 0;"><span id="avg-mq4">—</span> <span class="unit">ADC</span></div>
                 </div>
-                <div class="card metric-card">
-                    <h3>Temp. Promedio</h3>
-                    <div class="value"><span id="avg-temp">—</span> <span class="unit">°C</span></div>
-                    <div class="status valid-text">Estable</div>
+                <div class="card metric-card interactive-card active" id="card-temp" style="cursor: pointer; transition: 0.3s; border: 2px solid #f97316; background-color: rgba(249, 115, 22, 0.1);">
+                    <h3 style="margin-bottom: 8px;">Temperatura Promedio</h3>
+                    <div class="value" style="margin: 0;"><span id="avg-temp">—</span> <span class="unit">°C</span></div>
                 </div>
-                <div class="card metric-card">
-                    <h3>Humedad Prom.</h3>
-                    <div class="value"><span id="avg-humidity">—</span> <span class="unit">%</span></div>
-                    <div class="status valid-text">Normal</div>
+                <div class="card metric-card interactive-card" id="card-hum" style="cursor: pointer; transition: 0.3s; border: 2px solid transparent;">
+                    <h3 style="margin-bottom: 8px;">Humedad Promedio</h3>
+                    <div class="value" style="margin: 0;"><span id="avg-humidity">—</span> <span class="unit">%</span></div>
                 </div>
             </div>
 
-            <!-- PANEL INFERIOR CON TABLA DE HISTORIAL -->
+            <!-- CONTENEDORES INFERIORES: GRÁFICA Y TABLA -->
             <div class="bottom-grid">
-                <!-- Tabla de datos históricos -->
-                <div class="card map-card" style="grid-column: span 2;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                
+                <!-- GRÁFICA INTERACTIVA -->
+                <div class="card map-card" style="padding: 24px; box-sizing: border-box; min-height: 400px;">
+                    <h3 id="chart-title" style="margin-bottom: 20px;">Tendencia de Temperatura (°C)</h3>
+                    <div style="position: relative; height: 320px; width: 100%;">
+                        <canvas id="historyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- TABLA DE DATOS HISTÓRICOS -->
+                <div class="card map-card" style="min-height: 450px; display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                         <h3>Bitácora de Eventos y Sensores</h3>
-                        <button id="btn-export-csv" class="icon-btn" style="font-size: 14px; background: var(--surfaceMuted); padding: 6px 12px; border-radius: 8px; cursor: pointer; border: none; color: var(--textPrimary); display: flex; align-items: center; gap: 6px;">
-                            <i class="fa-solid fa-download"></i> Exportar CSV
-                        </button>
                     </div>
                     
-                    <div class="map-placeholder" style="justify-content: flex-start; align-items: stretch; padding: 16px; overflow-y: auto; text-align: left;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                            <thead>
-                                <tr style="border-bottom: 1px solid var(--border); color: var(--textSecondary);">
-                                    <th style="padding: 8px; text-align: left;">Timestamp</th>
-                                    <th style="padding: 8px; text-align: left;">Sensor / Módulo</th>
-                                    <th style="padding: 8px; text-align: left;">Valor Registrado</th>
-                                    <th style="padding: 8px; text-align: left;">Estado</th>
+                    <!-- Contenedor con scroll interno para la tabla -->
+                    <div style="height: 350px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background-color: var(--surface);">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">
+                            <thead style="position: sticky; top: 0; background-color: var(--surfaceMuted); z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <tr style="color: var(--textSecondary);">
+                                    <th style="padding: 12px 16px;">Timestamp</th>
+                                    <th style="padding: 12px 16px;">Sensor / Módulo</th>
+                                    <th style="padding: 12px 16px;">Valor Registrado</th>
+                                    <th style="padding: 12px 16px;">Estado</th>
                                 </tr>
                             </thead>
                             <tbody id="history-table-body">
-                                <!-- Filas vacías o con guiones para que el backend las inyecte dinámicamente -->
                                 <tr>
-                                    <td colspan="4" style="padding: 20px; text-align: center; color: var(--textSecondary);">
+                                    <td colspan="4" style="padding: 30px; text-align: center; color: var(--textSecondary);">
                                         Cargando registros desde la base de datos...
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <p class="map-footer">Mostrando registros en tiempo real sincronizados con el servidor.</p>
+                    <p class="map-footer" style="margin-top: 16px;">Mostrando registros sincronizados con el servidor.</p>
                 </div>
             </div>
         </main>
