@@ -43,5 +43,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     fetchResumen();
     
-    setInterval(fetchResumen, 5000); 
+    setInterval(fetchResumen, 2000); 
 });

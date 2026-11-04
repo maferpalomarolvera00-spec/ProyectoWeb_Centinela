@@ -105,37 +105,38 @@ public class TelemetriaRepository : ITelemetriaRepository
         try
         {
             using var httpClient = new System.Net.Http.HttpClient();
-            // Consulta a la vista interpretada, ordenada de más reciente a más antigua
-            string url = $"https://wnjgfpuclcxsbsafdvtx.supabase.co/rest/v1/v_readings_interpreted?select=*&order=captured_at.desc.nulls_last&limit={limite}";
+            
+            string url = $"https://wnjgfpuclcxsbsafdvtx.supabase.co/rest/v1/v_readings_interpreted?select=*&order=received_at.desc&limit={limite}";
             string key = "sb_publishable_UpuAf93rrPTZC7w9khKC2w_dWK6vV6c";
-        
+            
             httpClient.DefaultRequestHeaders.Add("apikey", key);
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {key}");
 
             var response = await httpClient.GetAsync(url);
-        
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    using var doc = System.Text.Json.JsonDocument.Parse(json);
-                    
-                    var historial = new List<Telemetria>();
-                    foreach (var elemento in doc.RootElement.EnumerateArray())
-                    {
-                        historial.Add(new Telemetria
-                        {
-                            DatosJson = elemento.GetRawText(),
-                            FechaRegistro = elemento.TryGetProperty("captured_at", out var d) && d.ValueKind != System.Text.Json.JsonValueKind.Null ? d.GetDateTime() : DateTime.UtcNow
-                        });
-                    }
-                    return historial;
-                }
-        return new List<Telemetria>();
-            }
-            catch
+            
+            if (response.IsSuccessStatusCode)
             {
-                return new List<Telemetria>();
+                var json = await response.Content.ReadAsStringAsync();
+                using var doc = System.Text.Json.JsonDocument.Parse(json);
+                
+                var historial = new List<Telemetria>();
+                foreach (var elemento in doc.RootElement.EnumerateArray())
+                {
+                    historial.Add(new Telemetria
+                    {
+                        DatosJson = elemento.GetRawText(),
+                        // Ajustamos también para que lea received_at
+                        FechaRegistro = elemento.TryGetProperty("received_at", out var d) && d.ValueKind != System.Text.Json.JsonValueKind.Null ? d.GetDateTime() : DateTime.UtcNow
+                    });
+                }
+                return historial;
             }
+            return new List<Telemetria>();
+        }
+        catch
+        {
+            return new List<Telemetria>();
+        }
     }
 
     // Método para Recordatorios
